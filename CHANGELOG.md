@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.2.0
+
+### Added
+- `pystrat.Style.plot_legend(annotations_loc='right')`, `annotations_loc=` parameter controls where annotations plot in the Style legend
+- more annotations
+- `pystrat.Section.plot_data_attribute(clean=True)`, `clean=` parameter helps with styling of data attribute plotting
+
 ## 2.1.0
 
 ### Added
