@@ -606,7 +606,7 @@ class Section:
         if self.annotations is not None:
             self.annotations.height = self.annotations.height + shift
 
-    def plot_data_attribute(self, attribute, ax=None, style=None):
+    def plot_data_attribute(self, attribute, ax=None, style=None, clean=True):
         """Plot a data attribute
 
         Parameters
@@ -617,6 +617,8 @@ class Section:
             Axis to plot into, by default None. If None, will create a new axis and return it.
         style : dict, optional
             Plotting style dictionary compatible with matplotlib.pyplot.plot, by default None. If None, a default style will be used.
+        clean : bool, optional
+            Whether or not to clean up the axes, by default True. If True, will remove the y-axis and the top and right spines.
 
         Returns
         -------
@@ -626,20 +628,24 @@ class Section:
         if ax is None:
             ax = plt.axes()
 
+        default_style = {'marker': '.',
+                         'markersize': 5,
+                         'color': 'k',
+                         'linestyle': ''}
         if style is None:
-            style = {'marker': '.', 
-                     'markersize': 5,
-                    'color': 'k',
-                    'linestyle': ''}
+            style = default_style
+        else:
+            style = {**default_style, **style}
         assert hasattr(self, attribute), 'Section does not have requested attribute.'
 
         cur_att = getattr(self, attribute)
         ax.plot(cur_att.values, cur_att.height, **style)
         ax.set_xlabel(attribute)
         # clean up axes
-        ax.get_yaxis().set_visible(False)
-        ax.spines['left'].set_visible(False)
-        ax.spines['right'].set_visible(False)
+        if clean:
+            ax.get_yaxis().set_visible(False)
+            ax.spines['top'].set_visible(False)
+            ax.spines['right'].set_visible(False)
 
         if ax is not None:
             return ax
@@ -1580,7 +1586,6 @@ def attribute_convert_and_check(attribute):
 
     # make at least 1d
     attribute = np.atleast_1d(attribute)
-
     # check that the data are 1d
     if attribute.ndim != 1:
         raise Exception('Data must be 1d.')
