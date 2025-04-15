@@ -1310,25 +1310,20 @@ class Style():
         The labels to which colors and widths are assigned. When plotting a
         Section, values within the facies of that Section
         must form a subset of the values within this array_like.
-
     color_values : array_like
         The colors that will be assigned to the associated labels.
         Values must be interpretable by matplotlib.
-
     width_values : 1d array_like of floats
         The widths that will be assigned to the associated labels.
         Values must be between 0 and 1.
-
     swatch_values : 1d array-like
         USGS swatch codes (see swatches/png/) for labels.
         Give zero for no swatch.
-
     annotations : list, dict, or None
         Specification of annotations to plot alongside sections, by default None. 
         If None, no annotations are plotted. 
         User can also provide a list of annotation names to select among the default annotations to plot. See :py:meth:`Style.plot_default_annotations()` for the default annotations provided by pystrat.
         Alternatively, the user can provide a dictionary linking annotation names to png file paths for plotting custom annotations.
-
     swatch_wid : float (default 1.5)
         Width of the swatch pattern in inches.
     """
@@ -1435,7 +1430,8 @@ class Style():
     def plot_legend(self, 
                     ax=None, 
                     legend_unit_height=0.25,
-                    fontsize=10):
+                    fontsize=10,
+                    annotations_loc='bottom'):
         """
         Plot a legend for this Style object.
 
@@ -1444,18 +1440,17 @@ class Style():
         legend_unit_height : float
             A scaling factor to modify the height of each unit in the
             legend only.
-
         ax : matplotlib.Axes, optional
             Axis to plot into, defaults to None. If None, creates an axis.
-
         fontsize : float (default 10)
             Fontsize for text in the legend.
+        annotations_loc : str (default 'right')
+            Location of the annotations, default is 'bottom'. Options are 'right', 'bottom', or 'top'.
 
         Returns
         -------
         fig : matplotlib Figure
             Figure handle.
-
         ax : matplotlib Axes
             Axis handle.
         """
@@ -1523,17 +1518,46 @@ class Style():
         if self.annotations is not None:
             n_annotations = len(self.annotations)
 
-            # plot each one beside the column
-            for ii in range(n_annotations):
-                height = 0.6
-                pos = [1.1, ii+0.5-height/2]
+            if annotations_loc == 'right':
+                # plot each one beside the column
+                for ii in range(n_annotations):
+                    height = 0.6
+                    pos = [1.1, ii+0.5-height/2]
 
-                # for text, assume min aspect ratio of image of 0.5
-                width = height/0.5*get_axis_aspect(ax)
-                ax.text(1.1+width, ii+0.5, list(self.annotations)[ii], 
-                        va='center',
-                        fontsize=fontsize)
-                plot_annotation(list(self.annotations.values())[ii], pos, height, ax)
+                    # for text, assume min aspect ratio of image of 0.5
+                    width = height/0.5*get_axis_aspect(ax)
+                    ax.text(1.1+width, ii+0.5, list(self.annotations)[ii], 
+                            va='center',
+                            fontsize=fontsize)
+                    plot_annotation(list(self.annotations.values())[ii], pos, height, ax)
+            
+            elif annotations_loc == 'bottom':
+                # plot each one below the column
+                for ii in range(n_annotations):
+                    height = 0.6
+                    pos = [0.0, (-ii-0.5) -height/2]
+
+                    # for text, assume min aspect ratio of image of 0.5
+                    width = height/0.5*get_axis_aspect(ax)
+                    ax.text(0.0 - width/2, -(ii+0.5), list(self.annotations)[ii], 
+                            va='center',
+                            ha='right',
+                            fontsize=fontsize)
+                    plot_annotation(list(self.annotations.values())[ii], pos, height, ax)
+
+            elif annotations_loc == 'top':
+                # plot each one below the column
+                for ii in range(n_annotations):
+                    height = 0.6
+                    pos = [0.0, (ii + 0.5) -height/2 + self.n_labels]
+
+                    # for text, assume min aspect ratio of image of 0.5
+                    width = height/0.5*get_axis_aspect(ax)
+                    ax.text(0.0 - width/2, (ii+0.5) + self.n_labels, list(self.annotations)[ii], 
+                            va='center',
+                            ha='right',
+                            fontsize=fontsize)
+                    plot_annotation(list(self.annotations.values())[ii], pos, height, ax)
 
         # prettify
         ax.set_xlim(0, 1)
