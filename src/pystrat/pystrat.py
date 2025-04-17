@@ -1316,7 +1316,7 @@ class Style():
     width_values : 1d array_like of floats
         The widths that will be assigned to the associated labels.
         Values must be between 0 and 1.
-    swatch_values : 1d array-like
+    swatch_values : 1d array-like of int
         USGS swatch codes (see swatches/png/) for labels.
         Give zero for no swatch.
     annotations : list, dict, or None
@@ -1342,7 +1342,7 @@ class Style():
         width_values = attribute_convert_and_check(width_values)
 
         if swatch_values is not None:
-            swatch_values = np.asarray(swatch_values).ravel().tolist()
+            swatch_values = np.asarray(swatch_values).astype(int).ravel().tolist()
 
         # convert from pandas series/dataframes to arrays if necessary
         if type(color_values) == pd.core.series.Series:
