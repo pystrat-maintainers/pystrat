@@ -1561,13 +1561,8 @@ class Style():
 
         # prettify
         ax.set_xlim(0, 1)
-        ax.set_xticks([0, 0.2, 0.4, 0.6, 0.8, 1])
-        for label in ax.get_xticklabels():
-            label.set_rotation(270)
-            label.set_ha('center')
-            label.set_va('top')
-        ax.set_axisbelow(True)
-        ax.xaxis.grid(ls='--')
+        ax.set_xticks([])
+        # ax.xaxis.grid(ls='--')
         # ax.set_yticklabels([])
         # ax.set_yticks([])
         ax.set_yticks(np.arange(len(labels))+0.5)
