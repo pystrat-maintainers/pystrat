@@ -1651,8 +1651,13 @@ def plot_swatch(swatch_code, extent, ax, swatch_wid=1.5, warn_size=False):
         return
 
     # load swatch, use swatch code as file name
+    swatch_code = int(swatch_code) # make sure integer
     swatch_path = resources.files('pystrat') / 'swatches' / f'{swatch_code}.png'
-    swatch = Image.open(swatch_path)
+    # try to open swatch
+    try:
+        swatch = Image.open(swatch_path)
+    except FileNotFoundError:
+        raise ValueError(f'Swatch {swatch_code} not found.')
    
     ax_x_in, ax_y_in = get_inch_per_dat(ax)
 
