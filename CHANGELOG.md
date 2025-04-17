@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.2.1
+
+### Fixed
+- enforce integer values for `plot_swatch` and in `pystrat.Style`
+
+### Changed
+- remove x-axis styling in `pystrat.Style.plot_legend()`
+
+
 ## 2.2.0
 
 ### Added
