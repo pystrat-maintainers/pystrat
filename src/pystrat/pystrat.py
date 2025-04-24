@@ -838,6 +838,9 @@ class Section:
                 label.set_va('top')
             ax.set_axisbelow(True)
             ax.xaxis.grid(ls='--')
+        else:
+            ax.set_xticks([])
+            ax.set_xticklabels([])
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         ax.set_ylabel('Height (m)')
