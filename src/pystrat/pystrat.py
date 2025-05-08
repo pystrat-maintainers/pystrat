@@ -657,7 +657,8 @@ class Section:
              annotation_height=0.15,
              label_units=False,
              unit_label_wid_tot=0.2,
-             unit_fontsize=8):
+             unit_fontsize=8,
+             xticks=True):
         """
         Plot this section using a Style object.
 
@@ -684,6 +685,10 @@ class Section:
 
         unit_fontsize : float, optional
             Fontsize for labeling units. Default is 8.
+            
+        xticks : boolean, optional
+            Whether or not to label xticks and make associated vertical lines. 
+            Default is True.
 
         """
         # get the attributes - implicitly checks if the attributes exist
@@ -825,13 +830,17 @@ class Section:
 
         # prettify
         # ax.set_xlim(0, 1)
-        ax.set_xticks([0, 0.2, 0.4, 0.6, 0.8, 1])
-        for label in ax.get_xticklabels():
-            label.set_rotation(270)
-            label.set_ha('center')
-            label.set_va('top')
-        ax.set_axisbelow(True)
-        ax.xaxis.grid(ls='--')
+        if xticks:
+            ax.set_xticks([0, 0.2, 0.4, 0.6, 0.8, 1])
+            for label in ax.get_xticklabels():
+                label.set_rotation(270)
+                label.set_ha('center')
+                label.set_va('top')
+            ax.set_axisbelow(True)
+            ax.xaxis.grid(ls='--')
+        else:
+            ax.set_xticks([])
+            ax.set_xticklabels([])
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         ax.set_ylabel('Height (m)')
