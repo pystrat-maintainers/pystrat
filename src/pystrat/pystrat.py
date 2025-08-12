@@ -128,6 +128,7 @@ class Fence:
              plot_correlations=True,
              data_attributes=None,
              data_attribute_styles=None,
+             attribute_axis_full=False,
              section_plot_style=None,
              sec_names_rotate=True,
              sec_names_fontsize=10,
@@ -138,43 +139,32 @@ class Fence:
         ----------
         style : Style
             A Style object.
-
         fig : matplotlib.figure.Figure, optional
             Figure to plot into if desired, by default None. If None, will create and return a new figure.
-
         sec_wid_fac : float, optional
             Ratio of section axis width to data attribute axes widths, defaults to 1. A value of 1 means that the section axis is the same width as the data attribute axes. Values less than 1 mean that the section axis is narrower than the data attribute axes.
-
         col_buffer_fac : float, optional
             Fraction of section width used to buffer between columns in the fence, defaults to 0.2. A value of 0 means no buffer and columns immediately abut each other.
-
         distance_spacing : boolean, optional
             Whether or not to scale the distances between sections according to the distances between self.coordinates, or plot_distances, if set. Default is False. If False, then sections are equally spaced.
-
         plot_distances : 1d array-like, optional
             Distances between sections to use for plotting. Default is None. If None, then distances are calculated from coordinates. If set, then length (n_sections - 1).
-
         distance_labels : 1d array-like or boolean, optional
             Labeling of distances between sections. Default is False. If False, no labels are plotted. If True, labels are plotted with the actual distances between sections (based on coordinates). If an array-like, then length must be (n_sections - 1) and values specify manual labeling of distances.
-
         distance_labels_style : dictionary, optional
             Style dictionary for distance labels. Default is None. If None, a default style is used. Dictionary is passed to matplotlib.pyplot.annotate.
-
         plot_correlations : boolean, optional
             Whether or not to plot correlated horizons. Default is True; this parameter is ignored if correlations is None.
-
         data_attributes : 1d array-like, optional
             List of data attributes to plot. Default is None. If None, no data attributes are plotted. If the attribute is not defined for a particular section, it is not plotted.
-
         data_attribute_styles : 1d array-like, optional
             Style dictionary or dictionaries to use to plot data attributes. Defaults to None, in which case a default style is used. Either same length as data_attributes, or length of one. If length of one, then the same style is used for all data attributes.
-        
+        attribute_axis_full : boolean, optional
+            Whether data attribute axes should take the full axis height (True) or only the height of the section (False). Default is False. If False, the data attribute axes will be the same height as the section.
         section_plot_styles : dictionary, optional
             Dictionary of style parameters passed to section plotting. Default is None. If None, a default style is used.
-
         sec_names_rotate : boolean, optional
             whether to plot section names vertically (True) or horizontally above columns in fence. Default is True.
-
         sec_names_fontsize : float, optional
             Fontsize for section names. Default is 10.
 
@@ -182,10 +172,8 @@ class Fence:
         -------
         fig : matplotlib.pyplot.Figure
             Returned if no figure is provided
-
         axes : list
             List of matplotlib axes objects for each column.
-
         axes_dat : list
             List of matplotlib axes objects for data attribute. Returned if data_attributes is not None. Each entry in the list is a list of axes for each data attribute. Sections with no data attributes will have a None entry.
         """
@@ -301,11 +289,20 @@ class Fence:
                     continue
                 else:
                     cur_sec_dat_axes = []
+                # loop over desired data attributes
                 for jj in range(len(data_attributes)):
                     if hasattr(self.sections[ii], data_attributes[jj]):
+                        # if attribute axis is full height, then use full height of section
+                        if attribute_axis_full:
+                            cur_y0 = 0
+                            cur_y1 = 1
+                        # otherwise use the fraction of the current section height with respect to the full height
+                        else:
+                            cur_y0 = (self.sections[ii].base_height[0] - min_height) / (max_height - min_height)
+                            cur_y1 = (self.sections[ii].top_height[-1] - min_height) / (max_height - min_height)
                         cur_sec_dat_axes.append(
-                            plt.axes([ax_left_coords[ii] + sec_wid + jj * data_att_wid, 0,
-                                        data_att_wid, 1]))
+                            plt.axes([ax_left_coords[ii] + sec_wid + jj * data_att_wid, cur_y0,
+                                        data_att_wid, cur_y1- cur_y0],))
                     else:
                         cur_sec_dat_axes.append(None)
                 axes_dat.append(cur_sec_dat_axes)
@@ -320,7 +317,13 @@ class Fence:
             for ii in range(self.n_sections):
                 for jj, attribute in enumerate(data_attributes):
                     if hasattr(self.sections[ii], attribute):
-                        axes_dat[ii][jj].set_ylim([min_height, max_height])
+                        # if attribute axis is full height, then use full height of fence
+                        if attribute_axis_full:
+                            axes_dat[ii][jj].set_ylim([min_height, max_height])
+                        # otherwise just use section height
+                        else:
+                            axes_dat[ii][jj].set_ylim([self.sections[ii].base_height[0],
+                                                       self.sections[ii].top_height[-1]])
 
         # then plot sections
         if section_plot_style is None:
@@ -630,7 +633,8 @@ class Section:
         default_style = {'marker': '.',
                          'markersize': 5,
                          'color': 'k',
-                         'linestyle': ''}
+                         'linestyle': '',
+                         'clip_on': False}
         if style is None:
             style = default_style
         else:
