@@ -125,7 +125,7 @@ class Fence:
              plot_distances=None,
              distance_labels=False,
              distance_labels_style=None,
-             plot_correlations=None,
+             plot_correlations=True,
              data_attributes=None,
              data_attribute_styles=None,
              section_plot_style=None,
@@ -355,10 +355,9 @@ class Fence:
             axes[ii].spines['bottom'].set_visible(False)
 
         # plot correlated beds as connections
-        if self.correlations is not None and plot_correlations is None:
-            plot_correlations = True
-        else:
-            plot_correlations = False
+        if self.correlations is None and plot_correlations is True:
+            warnings.warn('No correlations provided, not plotting correlations.')
+
         if plot_correlations:
             for ii in range(self.correlations.shape[1]):
                 for jj in range(self.n_sections - 1):
