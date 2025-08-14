@@ -121,6 +121,7 @@ class Fence:
              fig=None,
              sec_wid_fac=1,
              col_buffer_fac=0.2,
+             sec_data_buf_fac=0.3,
              distance_spacing=False,
              plot_distances=None,
              distance_labels=False,
@@ -145,6 +146,8 @@ class Fence:
             Ratio of section axis width to data attribute axes widths, defaults to 1. A value of 1 means that the section axis is the same width as the data attribute axes. Values less than 1 mean that the section axis is narrower than the data attribute axes.
         col_buffer_fac : float, optional
             Fraction of section width used to buffer between columns in the fence, defaults to 0.2. A value of 0 means no buffer and columns immediately abut each other.
+        sec_data_buf_fac : float, optional
+            Fraction of section width used to buffer between section axes and data attribute axes, defaults to 0.3
         distance_spacing : boolean, optional
             Whether or not to scale the distances between sections according to the distances between self.coordinates, or plot_distances, if set. Default is False. If False, then sections are equally spaced.
         plot_distances : 1d array-like, optional
@@ -211,26 +214,27 @@ class Fence:
 
         '''
         The Fence class conceptualizes section geometry as in the following diagram.
-        ┌──────┬──┬──┐b┌──────┬──┐b┌──────┐
-        │      │  │  │ │      │  │ │      │
-        │      │  │  │ │      │  │ │      │
-        │      │  │  │ │      │  │ │      │
-        │      │  │  │ │      │  │ │      │
-        │      │  │  │ │      │  │ │      │
-        │      │  │  │ │      │  │ │      │
-        │      │  │  │ │      │  │ │      │
-        │      │  │  │ │      │  │ │      │
-        │      │  │  │ │      │  │ │      │
-        │  x   │a │a │ │  x   │a │ │  x   │
-        └──────┴──┴──┘ └──────┴──┘ └──────┘
+        ┌──────┐l┌──┬──┐b┌──────┐l┌──┐b┌──────┐
+        │      │ │  │  │ │      │ │  │ │      │
+        │      │ │  │  │ │      │ │  │ │      │
+        │      │ │  │  │ │      │ │  │ │      │
+        │      │ │  │  │ │      │ │  │ │      │
+        │      │ │  │  │ │      │ │  │ │      │
+        │      │ │  │  │ │      │ │  │ │      │
+        │      │ │  │  │ │      │ │  │ │      │
+        │      │ │  │  │ │      │ │  │ │      │
+        │      │ │  │  │ │      │ │  │ │      │
+        │  x   │ │a │a │ │  x   │ │a │ │  x   │
+        └──────┘ └──┴──┘ └──────┘ └──┘ └──────┘
                                             
-        └────────────┘ └─────────┘ └──────┘
-            cw1          cw2        cw3    
+        └──────────────┘ └───────────┘ └──────┘
+            cw1              cw2       cw3    
 
         x: width of each section axis (same for all sections)
         a: width of each data attribute axis (same for all data attributes)
         b: buffer space between section axes. the minimum buffer is set by tau*x
-            tau: fraction of section width that is buffer space, tau is col_buffer_fac                    
+            tau: fraction of section width that is buffer space, tau is col_buffer_fac
+        l: spacing between section and first data attribute axis, set as sec_data_buf_fac*x (sec_data_buf_fac is lam below)                   
         cw1: width of column 1 (similarly for cw2, cw3)
 
         The sum over cw's and b's is 1. 
@@ -240,11 +244,11 @@ class Fence:
             bi = dist/dist_min * tau*x
 
         Yields the following equation in x:
-        n*x + m/gamma*x + sum(di)*tau*x = 1
-        where n is the number of sections, m is the total number of data attributes present across all sections, and di is the scaled distance between sections i and i+1 as defined above.
+        n*x + m/gamma*x + sum(di)*tau*x + P*l = 1
+        where n is the number of sections, m is the total number of data attributes present across all sections, di is the scaled distance between sections i and i+1 as defined above, and P is the number of sections with at least one data attribute.
 
         x is then:
-        x = 1/(n + m/gamma + sum(di)*tau)
+        x = 1/(n + m/gamma + sum(di)*tau + P*lam)
         '''
 
         # set up buffer distance between columns
@@ -265,10 +269,12 @@ class Fence:
         # solve for x, a, and bi
         dist_norm = distances / np.min(distances) # di above
         m = np.sum(n_att_sec) # m above
-        sec_wid = 1 / (self.n_sections + m/sec_wid_fac + np.sum(dist_norm)*col_buffer_fac)  # x above
+        P = np.sum(n_att_sec > 0) # P above
+        sec_wid = 1 / (self.n_sections + m/sec_wid_fac + np.sum(dist_norm)*col_buffer_fac + P*sec_data_buf_fac)  # x above
         data_att_wid = sec_wid / sec_wid_fac # a above
         bi = dist_norm * col_buffer_fac * sec_wid # bi above
-        col_widths = sec_wid + n_att_sec * data_att_wid # cw above
+        col_widths = sec_wid + n_att_sec * data_att_wid + (n_att_sec > 0)*sec_data_buf_fac*sec_wid # cw above
+        print(col_widths)
 
         # compute left coordinates of section axes
         ax_left_coords = np.cumsum(np.insert(col_widths, 0, 0))[0:-1] + \
@@ -301,7 +307,7 @@ class Fence:
                             cur_y0 = (self.sections[ii].base_height[0] - min_height) / (max_height - min_height)
                             cur_y1 = (self.sections[ii].top_height[-1] - min_height) / (max_height - min_height)
                         cur_sec_dat_axes.append(
-                            plt.axes([ax_left_coords[ii] + sec_wid + jj * data_att_wid, cur_y0,
+                            plt.axes([ax_left_coords[ii] + sec_data_buf_fac*sec_wid + sec_wid + jj * data_att_wid, cur_y0,
                                         data_att_wid, cur_y1- cur_y0],))
                     else:
                         cur_sec_dat_axes.append(None)
@@ -359,6 +365,7 @@ class Fence:
 
         # plot correlated beds as connections
         if self.correlations is None and plot_correlations is True:
+            plot_correlations = False
             warnings.warn('No correlations provided, not plotting correlations.')
 
         if plot_correlations:
