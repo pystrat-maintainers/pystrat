@@ -274,7 +274,6 @@ class Fence:
         data_att_wid = sec_wid / sec_wid_fac # a above
         bi = dist_norm * col_buffer_fac * sec_wid # bi above
         col_widths = sec_wid + n_att_sec * data_att_wid + (n_att_sec > 0)*sec_data_buf_fac*sec_wid # cw above
-        print(col_widths)
 
         # compute left coordinates of section axes
         ax_left_coords = np.cumsum(np.insert(col_widths, 0, 0))[0:-1] + \
