@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.2.2
+## 2.3.0
 
 ### Added
 - Parameter (`attribute_axis_full=False`) in `Fence.plot` to control the vertical extent of data attribute axes in plotting of Fence diagrams. By default now, data attribute axes will match the vertical extents of their sections.
