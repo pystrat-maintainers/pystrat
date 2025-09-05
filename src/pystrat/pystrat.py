@@ -126,7 +126,7 @@ class Fence:
              plot_distances=None,
              distance_labels=False,
              distance_labels_style=None,
-             plot_correlations=True,
+             plot_correlations=False,
              data_attributes=None,
              data_attribute_styles=None,
              attribute_axis_full=False,
@@ -157,7 +157,7 @@ class Fence:
         distance_labels_style : dictionary, optional
             Style dictionary for distance labels. Default is None. If None, a default style is used. Dictionary is passed to matplotlib.pyplot.annotate.
         plot_correlations : boolean, optional
-            Whether or not to plot correlated horizons. Default is True; this parameter is ignored if correlations is None.
+            Whether or not to plot correlated horizons. Default is False; this parameter is ignored if correlations is None.
         data_attributes : 1d array-like, optional
             List of data attributes to plot. Default is None. If None, no data attributes are plotted. If the attribute is not defined for a particular section, it is not plotted.
         data_attribute_styles : 1d array-like, optional
