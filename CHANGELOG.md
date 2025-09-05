@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.2.2
+
+### Added
+- Parameter (`attribute_axis_full=False`) in `Fence.plot` to control the vertical extent of data attribute axes in plotting of Fence diagrams. By default now, data attribute axes will match the vertical extents of their sections.
+- Parameter (`sec_data_buf_fac=0.3`) in `Fence.plot` to control the spacing between sections and their corresponding data attribute axes. This parameter helps to control spacing for visibility of annotations.
+- more annotations
+
+### Changed
+- `Fence.plot(plot_correlations=False)`: plot_correlations is false by default now.
+- xticks in `Section.plot` optional now
+
 ## 2.2.1
 
 ### Fixed
