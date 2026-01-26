@@ -1449,7 +1449,8 @@ class Style():
                     ax=None, 
                     legend_unit_height=0.25,
                     fontsize=10,
-                    annotations_loc='bottom'):
+                    annotations_loc='bottom',
+                    facies_order=None):
         """
         Plot a legend for this Style object.
 
@@ -1464,6 +1465,8 @@ class Style():
             Fontsize for text in the legend.
         annotations_loc : str (default 'right')
             Location of the annotations, default is 'bottom'. Options are 'right', 'bottom', or 'top'.
+        facies_order : 1d array_like, optional
+            Order in which to plot facies in the legend. If None, sorts by width.
 
         Returns
         -------
@@ -1479,15 +1482,32 @@ class Style():
         width_values = self.width_values
         swatch_values = self.swatch_values
 
-        # sort by width
-        width_sort_inds = np.argsort(width_values)
-        labels = labels[width_sort_inds]
-        color_values = color_values[width_sort_inds]
-        width_values = width_values[width_sort_inds]
+        # reorder if facies_order is provided
+        if facies_order is not None:
+            # check that all facies in facies_order are in labels
+            if not np.all(np.in1d(facies_order, labels)):
+                missing_facies = facies_order[~np.in1d(facies_order, labels)]
+                raise ValueError(f'Facies {missing_facies} in facies_order not in style labels.')
+            order_inds = []
+            for facies in facies_order:
+                order_inds.append(np.where(labels == facies)[0][0])
+            order_inds = np.array(order_inds)
+            # reverse order_inds (facies from top to bottom, not bottom to top)
+            order_inds = len(labels) - 1 - order_inds
+            labels = labels[order_inds]
+            color_values = color_values[order_inds]
+            width_values = width_values[order_inds]
+            if swatch_values is not None:
+                swatch_values = [swatch_values[x] for x in order_inds]
+        else:
+            # sort by width
+            width_sort_inds = np.argsort(width_values)
+            labels = labels[width_sort_inds]
+            color_values = color_values[width_sort_inds]
+            width_values = width_values[width_sort_inds]
 
-        # what does this do??
-        if swatch_values is not None:
-            swatch_values = [swatch_values[x] for x in width_sort_inds]
+            if swatch_values is not None:
+                swatch_values = [swatch_values[x] for x in width_sort_inds]
 
         # initiate ax
         if ax == None:
