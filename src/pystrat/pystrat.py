@@ -873,14 +873,14 @@ class Section:
             A Style object.
         """
         # assert that all facies in the section are present in style
-        if not np.all(np.in1d(self.facies, style.labels)):
-            missing_style = self.facies[~np.in1d(self.facies, style.labels)]
+        if not np.all(np.isin(self.facies, style.labels)):
+            missing_style = self.facies[~np.isin(self.facies, style.labels)]
             warnings.warn(f'{missing_style} in {self.name} not in style.')
             return False
         # check that annotations, if present, are in style
         elif (self.annotations is not None) and (style.annotations is not None):
-            if not np.all(np.in1d(self.annotations.annotation, list(style.annotations.keys()))):
-                missing_ann = self.annotations.annotation[~np.in1d(self.annotations.annotation, list(style.annotations.keys()))].values
+            if not np.all(np.isin(self.annotations.annotation, list(style.annotations.keys()))):
+                missing_ann = self.annotations.annotation[~np.isin(self.annotations.annotation, list(style.annotations.keys()))].values
                 warnings.warn(f'{missing_ann} not in style.')
                 return False
             else:
