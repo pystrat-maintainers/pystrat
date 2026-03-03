@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.4.1
+
+### Fixed
+- fixed other deprecated calls to `np.in1d`
+
 ## 2.4.0
 
 ### Added 
