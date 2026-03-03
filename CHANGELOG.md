@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.4.0
+
+### Added 
+- ability to specify order in which to plot facies in `Style.plot_legend()`
+
+### Fixed
+- deprecated calls to `np.in1d`
+
 ## 2.3.0
 
 ### Added
