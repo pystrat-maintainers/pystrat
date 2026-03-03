@@ -1485,8 +1485,8 @@ class Style():
         # reorder if facies_order is provided
         if facies_order is not None:
             # check that all facies in facies_order are in labels
-            if not np.all(np.in1d(facies_order, labels)):
-                missing_facies = facies_order[~np.in1d(facies_order, labels)]
+            if not np.all(np.isin(facies_order, labels)):
+                missing_facies = facies_order[~np.isin(facies_order, labels)]
                 raise ValueError(f'Facies {missing_facies} in facies_order not in style labels.')
             order_inds = []
             for facies in facies_order:
