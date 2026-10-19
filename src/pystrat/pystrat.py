@@ -802,21 +802,21 @@ class Section:
 
             # loop over each level
             for ii in range(n_levels):
-                # unique unit names
-                cur_names_unique = np.unique(self.units[:, ii])
-                seq_idxs = []
-                for name in cur_names_unique:
-                    # find sequences of unit names
-                    seq_idxs.append(findseq(self.units[:, ii], name))
-                seq_idxs = np.concatenate(seq_idxs, axis=0)
+                # first and last bed of each interval of consecutive beds with
+                # the same unit name (a name can label more than one interval)
+                cur_names = self.units[:, ii]
+                interval_starts = np.flatnonzero(
+                    np.append(True, cur_names[1:] != cur_names[:-1]))
+                interval_ends = np.append(interval_starts[1:] - 1, len(cur_names) - 1)
 
                 # create boxes and label with unit names
-                for jj, name in enumerate(cur_names_unique):
+                for interval_start, interval_end in zip(interval_starts, interval_ends):
+                    name = cur_names[interval_start]
                     # box
                     cur_x = -unit_label_wid_tot + ii * unit_label_wid
-                    cur_y = self.base_height[seq_idxs[jj, 0]]
+                    cur_y = self.base_height[interval_start]
                     cur_orig = (cur_x, cur_y)
-                    cur_height = self.top_height[seq_idxs[jj, 1]] - cur_y
+                    cur_height = self.top_height[interval_end] - cur_y
                     cur_rect = Rectangle(cur_orig, unit_label_wid, cur_height,
                                          edgecolor='k', facecolor=(1, 1, 1, 0))
                     ax.add_patch(cur_rect)
