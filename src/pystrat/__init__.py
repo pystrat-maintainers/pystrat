@@ -16,3 +16,4 @@ finally:
     del version, PackageNotFoundError
 
 from .pystrat import *
+from .svg_swatches import *

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 75 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;">
+    <g transform="matrix(1,0,0,1,-268.929201,-217.620756)">
+        <g id="climbing-ripples" serif:id="climbing ripples" transform="matrix(4.884997,0,0,4.968133,264.524839,211.367485)">
+            <rect x="0.902" y="1.259" width="15.353" height="8.527" style="fill:none;"/>
+            <g id="Layer-1" serif:id="Layer 1" transform="matrix(0.479058,0,0,0.838679,1.204624,0.247103)">
+                <g transform="matrix(0.863797,0,0,1.148316,12.478043,4.576712)">
+                    <path d="M0,2.04C1.42,0.621 2.85,-0.81 4.12,-2.08C9.48,0.04 14.63,2.08 19.78,4.12" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:1.13px;"/>
+                </g>
+                <g transform="matrix(0.863797,0,0,1.148316,18.213313,3.349047)">
+                    <path d="M0,6.029C-4.18,4.33 -8.939,2.38 -13.089,0.599C-13.899,0.25 -14.47,0 -15.2,0.809C-16.799,2.599 -18.51,4.3 -20.18,6.029" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:1.13px;"/>
+                </g>
+                <g transform="matrix(-0.554242,0.880771,0.662542,0.736799,20.38096,10.938036)">
+                    <path d="M-4.452,-2.08C-2.772,-2.031 -0.707,-2.037 0.972,-2.08" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:0.87px;"/>
+                </g>
+                <g transform="matrix(-0.575317,0.856555,0.644326,0.764816,6.756338,11.106677)">
+                    <path d="M-4.89,-2.19C-3.12,-2.191 -0.789,-2.188 0.98,-2.19" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:0.87px;"/>
+                </g>
+                <g transform="matrix(-0.585313,0.844502,0.63526,0.778104,17.169487,9.552767)">
+                    <path d="M-4.642,-2.035C-2.876,-2.107 -0.874,-1.963 0.892,-2.035" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:0.87px;"/>
+                </g>
+                <g transform="matrix(-0.553397,0.881709,0.663248,0.735676,10.636728,10.778308)">
+                    <path d="M-3.419,-1.6C-2.348,-1.697 -0.322,-1.503 0.749,-1.6" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:0.87px;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

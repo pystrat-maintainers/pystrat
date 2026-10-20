@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 75 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-268.929201,-53.515802)">
+        <g id="hummocky" transform="matrix(4.884997,0,0,4.206199,264.524839,48.221559)">
+            <rect x="0.902" y="1.259" width="15.353" height="8.527" style="fill:none;"/>
+            <g id="Layer-1" serif:id="Layer 1" transform="matrix(0.479058,0,0,0.990601,1.204624,0.063862)">
+                <g transform="matrix(0.267442,0,0,0.213031,-1.923634,-2.494278)">
+                    <path d="M9.847,36.54C9.847,36.54 27.857,24.084 36.863,24.084C45.868,24.084 63.879,36.54 63.879,36.54C63.879,36.54 81.889,48.995 90.894,48.995C99.9,48.995 117.91,36.54 117.91,36.54" style="fill:none;stroke:black;stroke-width:5.43px;"/>
+                </g>
+                <g transform="matrix(0.278476,0,0,0.282588,-2.032287,-2.38246)">
+                    <path d="M9.847,36.54C9.847,36.54 27.857,24.084 36.863,24.084C45.868,24.084 81.256,35.45 81.256,35.45" style="fill:none;stroke:black;stroke-width:4.38px;"/>
+                </g>
+                <g transform="matrix(0.278367,0,0,0.328765,-0.134212,-2.421494)">
+                    <path d="M65.434,28.119C65.434,28.119 47.264,30.924 38.108,30.924C28.714,30.924 9.071,28.119 9.071,28.119" style="fill:none;stroke:black;stroke-width:3.88px;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,13 +1,13 @@
 ﻿name,path
-pillow,example-data/annotations/pillow.png
-geochron,example-data/annotations/geochron.png
-dropstone,example-data/annotations/dropstone.png
-hcs,example-data/annotations/hcs.png
-wave ripples,example-data/annotations/wave ripples.png
-nodule,example-data/annotations/nodule.png
-current,example-data/annotations/current.png
-swaley,example-data/annotations/swaley.png
-climbing ripples,example-data/annotations/climbing ripples.png
-slump,example-data/annotations/slump.png
-black shale,example-data/annotations/black shale.png
-stromatolite,example-data/annotations/stromatolite.png
+pillow,../../src/pystrat/annotations/pillow.png
+geochron,../../src/pystrat/annotations/geochron.png
+dropstone,../../src/pystrat/annotations/dropstone.png
+hcs,../../src/pystrat/annotations/hcs.png
+wave ripples,../../src/pystrat/annotations/wave ripples.png
+nodule,../../src/pystrat/annotations/nodule.png
+current,../../src/pystrat/annotations/current.png
+swaley,../../src/pystrat/annotations/swaley.png
+climbing ripples,../../src/pystrat/annotations/climbing ripples.png
+slump,../../src/pystrat/annotations/slump.png
+black shale,../../src/pystrat/annotations/black shale.png
+stromatolite,../../src/pystrat/annotations/stromatolite.png

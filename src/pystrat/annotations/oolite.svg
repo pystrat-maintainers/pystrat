@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 75 76" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-miterlimit:10;">
+    <g transform="matrix(1,0,0,1,0,-1.122124)">
+        <g id="oolite" transform="matrix(2.994978,0,0,3.872144,-29.743811,-1.20344)">
+            <rect x="9.931" y="0.601" width="25.042" height="19.419" style="fill:none;"/>
+            <clipPath id="_clip1">
+                <rect x="9.931" y="0.601" width="25.042" height="19.419"/>
+            </clipPath>
+            <g clip-path="url(#_clip1)">
+                <g id="Layer-1" serif:id="Layer 1" transform="matrix(1.391218,0,0,1.076062,-4.769424,-0.972939)">
+                    <g transform="matrix(0,-0.562418,-0.562418,0,19.454215,2.915459)">
+                        <circle cx="-13.621" cy="0" r="13.621" style="fill:none;stroke:rgb(35,31,32);stroke-width:3.56px;"/>
+                    </g>
+                    <g transform="matrix(0,-0.562418,-0.562418,0,19.454271,7.124312)">
+                        <path d="M-6.138,-6.138C-9.527,-6.138 -12.276,-3.389 -12.276,0C-12.276,3.389 -9.527,6.138 -6.138,6.138C-2.748,6.138 0,3.389 0,0C0,-3.389 -2.748,-6.138 -6.138,-6.138" style="fill:rgb(35,31,32);fill-rule:nonzero;"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
